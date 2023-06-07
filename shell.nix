@@ -1,9 +1,12 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> {}
+, mcc-env }:
 
-pkgs.mkShell {
+let 
+  mccShell = pkgs.mkShell.override { stdenv = mcc-env; };
+in
+mccShell {
     name = "hello";
     buildInputs = with pkgs; [
-      clang
       clang-tools
     ];
 }

@@ -1,9 +1,15 @@
 {
   description = "C++ Hello";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-23.05";
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-23.05";
+    mini-compile-commands = {
+      url = "github:danielbarter/mini_compile_commands";
+      flake = false;
+    };
+  };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, mini-compile-commands }:
     let
       supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -22,8 +28,9 @@
       );
 
       devShells = forAllSystems (system:
-        {
-          default = (import ./shell.nix { pkgs = nixpkgsFor.${system};});
+        let pkgs = nixpkgsFor.${system}; in rec {
+          mcc-env = (pkgs.callPackage mini-compile-commands {}).wrap pkgs.clangStdenv;
+          default = (import ./shell.nix { inherit pkgs mcc-env; });
         }
       );
     };

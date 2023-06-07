@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "mini-compile-commands": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1685909220,
+        "narHash": "sha256-DTYtArvtUMsSyTgniJo4M5fnLRFi/7vFJz3y7F825Mg=",
+        "owner": "danielbarter",
+        "repo": "mini_compile_commands",
+        "rev": "91dd50748107c16dcf695b0da4aaade6b89b9541",
+        "type": "github"
+      },
+      "original": {
+        "owner": "danielbarter",
+        "repo": "mini_compile_commands",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1685716800,
@@ -17,6 +33,7 @@
     },
     "root": {
       "inputs": {
+        "mini-compile-commands": "mini-compile-commands",
         "nixpkgs": "nixpkgs"
       }
     }
